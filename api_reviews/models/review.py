@@ -4,6 +4,7 @@ from .user import User
 
 
 class Review(models.Model):
+    CHOICES = [(i, i) for i in range(1, 11)]
     author = models.ForeignKey(
         User,
         verbose_name='Автор комментария',
@@ -24,9 +25,14 @@ class Review(models.Model):
         verbose_name='Дата создания комментария',
         auto_now_add=True
     )
+    score = models.IntegerField(
+        verbose_name='Рейтинг объекта',
+        help_text='Выберите рейтинг от 1 до 10',
+        choices=CHOICES
+    )
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('-pub_date',)
 
         constraints = [
             models.UniqueConstraint(
