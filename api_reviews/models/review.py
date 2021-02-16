@@ -4,17 +4,25 @@ from .user import User
 
 
 class Review(models.Model):
+    author = models.ForeignKey(
+        User,
+        verbose_name='Автор комментария',
+        on_delete=models.CASCADE,
+        related_name='reviews'
+    )
     titles = models.ForeignKey(
         Title,
         verbose_name='К чему отзыв',
         on_delete=models.CASCADE,
         related_name='reviews'
     )
-    author = models.ForeignKey(
-        User,
-        verbose_name='Автор комментария',
+    parent = models.ForeignKey(
+        'self',
+        verbose_name='Родительский комментарий',
         on_delete=models.CASCADE,
-        related_name='reviews'
+        null=True,
+        blank=True,
+        related_name='replies'
     )
     text = models.TextField(
         verbose_name='Текст комментария',
@@ -27,6 +35,3 @@ class Review(models.Model):
 
     class Meta:
         ordering = ('-created',)
-
-    def __str__(self):
-        return f'<{self.author}> -> {self.text[:20]}'
