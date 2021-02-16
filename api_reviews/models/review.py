@@ -7,7 +7,7 @@ class Review(models.Model):
     CHOICES = [(i, i) for i in range(1, 11)]
     author = models.ForeignKey(
         User,
-        verbose_name='Автор комментария',
+        verbose_name='Автор отзыва',
         on_delete=models.CASCADE,
         related_name='reviews'
     )
@@ -18,11 +18,11 @@ class Review(models.Model):
         related_name='reviews'
     )
     text = models.TextField(
-        verbose_name='Текст комментария',
-        help_text='Напишите здесь текст вашего комментария!',
+        verbose_name='Текст отзыва',
+        help_text='Напишите здесь текст вашего отзыва!',
     )
     pub_date = models.DateTimeField(
-        verbose_name='Дата создания комментария',
+        verbose_name='Дата создания отзыва',
         auto_now_add=True
     )
     score = models.IntegerField(
