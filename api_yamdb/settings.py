@@ -10,9 +10,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = 'User.User'
+
 
 INSTALLED_APPS = [
     'api_reviews',
+    'User',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
