@@ -1,7 +1,8 @@
 from django.db import models
 
-from .title import Title
 from User.models import User
+
+from .title import Title
 
 
 class Review(models.Model):

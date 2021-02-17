@@ -1,8 +1,9 @@
 from django.db import models
 
+from User.models import User
+
 from .review import Review
 from .title import Title
-from User.models import User
 
 
 class Comment(models.Model):
