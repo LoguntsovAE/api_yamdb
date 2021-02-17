@@ -1,4 +1,4 @@
 from .comment import Comment
-from .title import Title
-from .user import User
 from .review import Review
+from .title import Title
+from User.models import User
