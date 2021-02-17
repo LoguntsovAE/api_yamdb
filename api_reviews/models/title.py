@@ -9,8 +9,7 @@ class Title(models.Model):
                             max_length=255)
     author = models.CharField('Автор',
                               max_length=100)
-    year = models.IntegerField('Год',
-                               max_length=4)
+    year = models.IntegerField('Год')
     description = models.TextField('Описание')
     genres = models.ManyToManyField(Genre,
                                     verbose_name='Жанры')
