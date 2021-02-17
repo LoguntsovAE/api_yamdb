@@ -2,7 +2,7 @@ from django.db import models
 
 from .review import Review
 from .title import Title
-from .user import User
+from User.models import User
 
 
 class Comment(models.Model):

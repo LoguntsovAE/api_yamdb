@@ -2,7 +2,8 @@ from django.db import models
 
 
 class Genre(models.Model):
-    name = models.CharField('Название')
+    name = models.CharField('Название',
+                            max_length=100)
     slug = models.SlugField('Ссылка',
                             max_length=100)
 

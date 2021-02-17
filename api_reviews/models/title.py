@@ -38,7 +38,6 @@ class Title(models.Model):
         verbose_name='Рейтинг произведения'
     )
 
-    class Meta:
-        def validate(self):
-            if self.year > CURENT_YEAR:
-                raise ValueError('Год не может быть больше текущего')
+    def validate(self):
+        if self.year > CURENT_YEAR:
+            raise ValueError('Год не может быть больше текущего')
