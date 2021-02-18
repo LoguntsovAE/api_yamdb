@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class UserConfig(AppConfig):
-    name = 'User'
+    name = 'api_users'
