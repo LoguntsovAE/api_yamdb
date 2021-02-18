@@ -56,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True
     )
     role = models.CharField(
-        max_length=30,
+        max_length=25,
         verbose_name='Роль пользователя',
         choices=Role.choices,
         default=Role.USER
@@ -66,12 +66,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True
     )
     first_name = models.CharField(
-        max_length=30,
+        max_length=20,
         verbose_name='Имя',
         null=True
     )
     last_name = models.CharField(
-        max_length=50,
+        max_length=30,
         verbose_name='Фамилия',
         null=True
     )
