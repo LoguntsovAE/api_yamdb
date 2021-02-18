@@ -12,12 +12,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+#  Custom model for user
 AUTH_USER_MODEL = 'User.User'
 
 
 INSTALLED_APPS = [
+    #  APPS
     'api_reviews',
     'User',
+    #  REST_FRAMEWORK
+    'rest_framework',
+    # DEFAULT
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -99,3 +104,10 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_DJANGO')
 EMAIL_HOST_PASSWORD = os.getenv('PASSWORD_EMAIL_DJANGO')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
