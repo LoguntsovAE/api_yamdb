@@ -452,7 +452,7 @@ paths:
                     results:
                       type: array
                       items:
-                        $ref: '#/components/schemas/User'
+                        $ref: '#/components/schemas/api_users'
         401:
           description: Необходим JWT токен
       security:
@@ -470,14 +470,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/api_users'
       responses:
         201:
           description: Пользователь создан
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/api_users'
         400:
           description: Ошибка
           content:
@@ -513,7 +513,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/api_users'
         401:
           description: Необходим JWT токен
         403:
@@ -535,14 +535,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/api_users'
       responses:
         200:
           description: Пользователь
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/api_users'
         400:
           description: Ошибка валидации
           content:
@@ -596,7 +596,7 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/api_users'
       security:
       - jwt_auth:
         - read:admin,moderator,user
@@ -612,14 +612,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/api_users'
       responses:
         200:
           description: Пользователь
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/api_users'
         400:
           description: Ошибка
           content:
