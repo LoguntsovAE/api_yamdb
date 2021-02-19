@@ -1,14 +1,16 @@
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from User.models import User, EmailCode
-from User.serializers import UserSerializer
-from rest_framework.pagination import PageNumberPagination
-from User.permissions import IsAdmin
-from rest_framework.decorators import api_view
-from django.http import HttpResponse
-from django.contrib.auth.models import send_mail
-from rest_framework.response import Response
 import os
+
+from django.contrib.auth.models import send_mail
+from django.http import HttpResponse
+from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from User.models import EmailCode, User
+from User.permissions import IsAdmin
+from User.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
