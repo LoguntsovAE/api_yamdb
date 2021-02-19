@@ -9,6 +9,9 @@ from rest_framework.permissions import (IsAuthenticated,
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Avg
 
+from api_reviews.serializers.title import (TitleSerializerGet,
+                                           TitleSerializerPost)
+
 
 class TitleFilter(filters.FilterSet):
     genre = filters.CharFilter(
