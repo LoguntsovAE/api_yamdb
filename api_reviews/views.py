@@ -12,10 +12,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
 
-    # def perform_create(self, serializer):
-    #     get_object_or_404(Title, id=self.kwargs.get('title_id'))
-    #     serializer.save(author=self.request.user)
-    #
-    # def get_queryset(self):
-    #     title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-    #     return title.reviews
+    def perform_create(self, serializer):
+        get_object_or_404(Title, id=self.kwargs.get('title_id'))
+        serializer.save(author=self.request.user)
+
+    def get_queryset(self):
+        title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
+        return title.reviews
