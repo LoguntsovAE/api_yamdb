@@ -3,19 +3,12 @@ from django.db import models
 from User.models import User
 
 from .review import Review
-from .title import Title
 
 
 class Comment(models.Model):
     review = models.ForeignKey(
         Review,
         verbose_name='К чему комментарий',
-        on_delete=models.CASCADE,
-        related_name='comment'
-    )
-    title = models.ForeignKey(
-        Title,
-        verbose_name='К чему отзыв',
         on_delete=models.CASCADE,
         related_name='comment'
     )
