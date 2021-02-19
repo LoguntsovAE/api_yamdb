@@ -1,4 +1,4 @@
-from api_users.models import User
+from User.models import User
 
 from .comment import Comment
 from .review import Review

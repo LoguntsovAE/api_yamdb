@@ -13,13 +13,13 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 #  Custom model for user
-AUTH_USER_MODEL = 'api_users.User'
+AUTH_USER_MODEL = 'User.User'
 
 
 INSTALLED_APPS = [
     #  APPS
     'api_reviews',
-    'api_users',
+    'User',
     #  REST_FRAMEWORK
     'rest_framework',
     # DEFAULT
@@ -111,9 +111,9 @@ EMAIL_USE_TLS = True
 
 # REST_FRAMEWORK
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],

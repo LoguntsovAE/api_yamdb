@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from api_users.models import User, EmailCode
-from api_users.serializers import UserSerializer
+from User.models import User, EmailCode
+from User.serializers import UserSerializer
 from rest_framework.pagination import PageNumberPagination
-from api_users.permissions import IsAdmin
+from User.permissions import IsAdmin
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from django.contrib.auth.models import send_mail
