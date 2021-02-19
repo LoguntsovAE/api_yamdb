@@ -6,7 +6,9 @@ from .title import Title
 
 
 class Review(models.Model):
+
     CHOICES = [(i, i) for i in range(1, 11)]
+
     author = models.ForeignKey(
         User,
         verbose_name='Автор отзыва',

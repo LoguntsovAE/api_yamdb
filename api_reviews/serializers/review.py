@@ -6,5 +6,5 @@ from api_reviews.models.review import Review
 class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        fields = ('id', 'author', 'title', 'text', 'pub_date', 'score')
         model = Review
