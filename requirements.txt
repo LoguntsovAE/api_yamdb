@@ -29,3 +29,4 @@ zipp==3.1.0               # via importlib-metadata
 
 python-dotenv~=0.15.0
 djangorestframework-simplejwt
+django-filter~=2.4.0
