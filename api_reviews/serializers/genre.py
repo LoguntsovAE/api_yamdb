@@ -4,7 +4,7 @@ from api_reviews.models.genre import Genre
 
 
 class GenreSerializer(serializers.ModelSerializer):
-
     class Meta:
-        fields = '__all__'
+        fields = ('name', 'slug',)
         model = Genre
+        lookup_field = 'slug'

@@ -14,9 +14,9 @@ class TitleSerializerGet(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
 
     class Meta:
-        fields = (
-            'id', 'name', 'year', 'rating', 'description',
-            'genre', 'category')
+        fields = ('id', 'name', 'year', 'rating', 
+                  'description', 'genre', 'category',
+            )
         model = Title
 
     def get_rating(self, obj):
@@ -31,15 +31,15 @@ class TitleSerializerPost(serializers.ModelSerializer):
         slug_field='slug',
         many=True
     )
-    Category = serializers.SlugRelatedField(
+    category = serializers.SlugRelatedField(
         queryset=Category.objects.all(),
         slug_field='slug',
     )
 
     class Meta:
-        fields = (
-            'id', 'name', 'year', 'description',
-            'genre', 'category')
+        fields = ('id', 'name', 'year', 'description',
+                  'genre', 'category',
+            )
         model = Title
 
     def get_rating(self, obj):
