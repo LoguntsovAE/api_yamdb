@@ -1,11 +1,12 @@
-from api_reviews.models.genre import Genre
-from api_reviews.models.category import Category
 from django.db.models.aggregates import Avg
 from rest_framework import serializers
 
+from api_reviews.models.category import Category
+from api_reviews.models.genre import Genre
 from api_reviews.models.title import Title
-from .genre import GenreSerializer
+
 from .category import CategorySerializer
+from .genre import GenreSerializer
 
 
 class TitleSerializerGet(serializers.ModelSerializer):

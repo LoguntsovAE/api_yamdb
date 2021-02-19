@@ -4,7 +4,8 @@ from rest_framework.permissions import (IsAuthenticated,
 
 # from api_reviews.models.title import Title
 # from .permissions import IsAuthorOrReadOnlyPermission
-from api_reviews.serializers.title import TitleSerializerGet, TitleSerializerPost
+from api_reviews.serializers.title import (TitleSerializerGet,
+                                           TitleSerializerPost)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
