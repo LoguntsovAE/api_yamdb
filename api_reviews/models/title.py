@@ -6,7 +6,7 @@ from django.db import models
 from .category import Category
 from .genre import Genre
 
-CURENT_YEAR = dt.datetime.today().year
+CURRENT_YEAR = dt.datetime.today().year
 
 
 class Title(models.Model):
@@ -38,5 +38,5 @@ class Title(models.Model):
     )
 
     def validate(self, year):
-        if year > CURENT_YEAR:
+        if year > CURRENT_YEAR:
             raise ValidationError('Год не может быть больше текущего')
