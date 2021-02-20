@@ -1,8 +1,9 @@
 
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import serializers, viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.serializers import ValidationError
 
 from api_reviews.models import Review, Title
 from api_reviews.permissions import IsOwnerOrReadOnlyPermission
@@ -24,4 +25,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
+        if Review.objects.filter(
+            title=title,
+            author=self.request.user
+        ).exists():
+            raise ValidationError('Вы уже писали своё ревью. Хватит!')
         serializer.save(author=self.request.user, title=title)
