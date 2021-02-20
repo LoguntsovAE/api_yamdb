@@ -31,7 +31,7 @@ class TitleViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     pagination_class = PageNumberPagination
     filter_backends = [filters.DjangoFilterBackend]
-    filter = TitleFilter
+    filterset_class = TitleFilter
 
     def get_serializer_class(self):
         if self.action == 'retrieve' or self.action == 'list':
