@@ -15,9 +15,9 @@ class TitleSerializerGet(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
 
     class Meta:
-        fields = ('id', 'name', 'year', 'rating', 
+        fields = ('id', 'name', 'year', 'rating',
                   'description', 'genre', 'category',
-            )
+                  )
         model = Title
 
     def get_rating(self, obj):
@@ -25,6 +25,7 @@ class TitleSerializerGet(serializers.ModelSerializer):
         if rating is None:
             return None
         return rating
+
 
 class TitleSerializerPost(serializers.ModelSerializer):
     genre = serializers.SlugRelatedField(
@@ -40,7 +41,7 @@ class TitleSerializerPost(serializers.ModelSerializer):
     class Meta:
         fields = ('id', 'name', 'year', 'description',
                   'genre', 'category',
-            )
+                  )
         model = Title
 
     def get_rating(self, obj):

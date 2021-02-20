@@ -14,5 +14,13 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
         def has_object_permission(self, request, view, obj):
             if request.method in permissions.SAFE_METHODS:
                 return True
-
             return obj.author == request.user
+
+
+# Класс пермишен для вьюсета комментов
+class IsOwnerOrReadOnlyPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return (
+            (request.user == obj.author)
+            or request.method in permissions.SAFE_METHODS
+            or request.user.is_staff)

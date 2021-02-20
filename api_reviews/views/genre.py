@@ -1,13 +1,17 @@
-from rest_framework import viewsets
-from rest_framework.permissions import (IsAuthenticated,
-                                        IsAuthenticatedOrReadOnly)
+from rest_framework import filters
+from rest_framework.pagination import PageNumberPagination
 
-# from api_reviews.models.genre import Genre
-# from .permissions import IsAuthorOrReadOnlyPermission
+from api_reviews.models.genre import Genre
+from api_reviews.viewset import CreateDesctroyReadOnlyCustom
+from api_reviews.permissions import IsAdminOrReadOnly
 from api_reviews.serializers.genre import GenreSerializer
 
 
-class GenreViewSet(viewsets.ModelViewSet):
+class GenreViewSet(CreateDesctroyReadOnlyCustom):
     serializer_class = GenreSerializer
-    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnlyPermission]
-    pass
+    queryset = Genre.objects.all()
+    permission_classes = [IsAdminOrReadOnly]
+    pagination_class = PageNumberPagination
+    lookup_field = 'slug'
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']

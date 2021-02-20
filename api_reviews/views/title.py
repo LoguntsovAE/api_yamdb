@@ -1,39 +1,30 @@
-from api_reviews.models.title import Title
-from api_reviews.serializers.title import (TitleSerializerGet,
-                                           TitleSerializerPost)
-from rest_framework import viewsets
-from django_filters import rest_framework as filters
-from api_reviews.permissions import IsAdminOrReadOnly
-from rest_framework.permissions import (IsAuthenticated,
-                                        IsAuthenticatedOrReadOnly)
-from rest_framework.pagination import PageNumberPagination
 from django.db.models import Avg
+from django_filters import rest_framework as filters
+from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 
+from api_reviews.models.title import Title
+from api_reviews.permissions import IsAdminOrReadOnly
 from api_reviews.serializers.title import (TitleSerializerGet,
                                            TitleSerializerPost)
 
 
 class TitleFilter(filters.FilterSet):
-    genre = filters.CharFilter(
-        field_name='genre__slug',
-        )
-    category = filters.CharFilter(
-        field_name='category__slug',
-        )
-    year = filters.CharFilter(
-        field_name='year',
-        )
+    genre = filters.CharFilter(field_name='genre__slug')
+    category = filters.CharFilter(field_name='category__slug')
+    year = filters.CharFilter(field_name='year')
     name = filters.CharFilter(
         field_name='name',
         lookup_expr='contains',
-        )
+    )
 
     class Meta:
         model = Title
         fields = (
             'genre', 'category',
             'year', 'name',
-            )
+        )
+
 
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.annotate(rating=Avg('reviews__score'))

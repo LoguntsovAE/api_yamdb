@@ -2,7 +2,7 @@ from django.conf.urls import include
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from .views import category, genre, comment, review, title
+from .views import category, comment, genre, review, title
 
 router_v1 = DefaultRouter()
 
