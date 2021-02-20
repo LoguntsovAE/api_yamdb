@@ -1,13 +1,17 @@
-from rest_framework import viewsets
-from rest_framework.permissions import (IsAuthenticated,
-                                        IsAuthenticatedOrReadOnly)
+from rest_framework import filters
+from rest_framework.pagination import PageNumberPagination
 
-# from api_reviews.models.category import Category
-# from .permissions import IsAuthorOrReadOnlyPermission
+from api_reviews.models.category import Category
+from api_reviews.viewset import CreateDesctroyReadOnlyCustom
+from api_reviews.permissions import IsAdminOrReadOnly
 from api_reviews.serializers.category import CategorySerializer
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(CreateDesctroyReadOnlyCustom):
+    queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnlyPermission]
-    pass
+    permission_classes = [IsAdminOrReadOnly]
+    pagination_class = PageNumberPagination
+    lookup_field = 'slug'
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
