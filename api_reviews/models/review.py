@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 from User.models import User
 
@@ -31,13 +30,10 @@ class Review(models.Model):
         auto_now_add=True
     )
     score = models.PositiveSmallIntegerField(
-        verbose_name='score',
-        validators=[
-            MinValueValidator(1, message='Min value 1'),
-            MaxValueValidator(10, message='Max value 10'),
-            ],
-        null=False,
-        )
+        verbose_name='Рейтинг объекта',
+        help_text='Выберите рейтинг от 1 до 10',
+        choices=CHOICES
+    )
 
     class Meta:
         ordering = ('-pub_date',)
