@@ -15,13 +15,13 @@ class TitleSerializerGet(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
 
     class Meta:
-        fields = ('id', 'name', 'year', 'rating',
-                  'description', 'genre', 'category',
-                  )
+        fields = (
+            'id', 'name', 'year', 'rating', 'description', 'genre', 'category',
+        )
         model = Title
 
     def get_rating(self, obj):
-        rating = obj.reviews.all().aggregate(Avg('score')).get('score_avg')
+        rating = obj.reviews.all().aggregate(Avg('score'))['score__avg']
         if rating is None:
             return None
         return rating
@@ -39,9 +39,9 @@ class TitleSerializerPost(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = ('id', 'name', 'year', 'description',
-                  'genre', 'category',
-                  )
+        fields = (
+            'id', 'name', 'year', 'description', 'genre', 'category',
+        )
         model = Title
 
     def get_rating(self, obj):
