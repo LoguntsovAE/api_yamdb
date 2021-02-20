@@ -1,20 +1,27 @@
-from rest_framework import viewsets
+
 from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from api_reviews.models import Review, Title
+from api_reviews.permissions import IsOwnerOrReadOnlyPermission
 from api_reviews.serializers.review import ReviewSerializer
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
-    permission_classes = []
-
-    serializer_class = ReviewSerializer
     queryset = Review.objects.all()
-
-    def perform_create(self, serializer):
-        get_object_or_404(Title, id=self.kwargs.get('title_id'))
-        serializer.save(author=self.request.user)
+    serializer_class = ReviewSerializer
+    pagination_class = PageNumberPagination
+    permission_classes = [
+        IsOwnerOrReadOnlyPermission,
+        IsAuthenticatedOrReadOnly,
+    ]
 
     def get_queryset(self):
+        title = get_object_or_404(Title, pk=self.kwargs.get('title_id'))
+        return title.reviews.all()
+
+    def perform_create(self, serializer):
         title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-        return title.reviews
+        serializer.save(author=self.request.user, title=title)
