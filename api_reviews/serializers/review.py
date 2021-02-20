@@ -9,6 +9,20 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    def validate(self, data):
+        """
+        проверка на наличие оценки у ревью
+        """
+        title = self.context.get('title')
+        request = self.context.get('request')
+        if (
+            request.method != 'PATCH' and
+            Review.objects.filter(title=title,
+                                  author=request.user,
+                                  ).exists()):
+            raise serializers.ValidationError('Assessment exists!')
+        return data
+
     class Meta:
         model = Review
         fields = '__all__'
