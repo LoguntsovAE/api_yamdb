@@ -8,8 +8,8 @@ from api_reviews.serializers.category import CategorySerializer
 
 
 class CategoryViewSet(CreateDesctroyReadOnlyCustom):
-    queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    queryset = Category.objects.all()
     permission_classes = [IsAdminOrReadOnly]
     pagination_class = PageNumberPagination
     lookup_field = 'slug'
