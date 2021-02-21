@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.fields import NOT_READ_ONLY_REQUIRED
 from rest_framework.validators import UniqueValidator
 
 from User.models import User
