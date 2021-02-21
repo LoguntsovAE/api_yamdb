@@ -1,10 +1,11 @@
 import os
 
 from django.contrib.auth.models import send_mail
+from django.http import HttpResponse
 from rest_framework import viewsets
-from rest_framework.decorators import api_view, action, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from User.models import EmailCode, User
@@ -13,30 +14,18 @@ from User.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
     permission_classes = [IsAuthenticated, IsAdmin]
     pagination_class = PageNumberPagination
     lookup_field = 'username'
-    serializer_class = UserSerializer
 
-    @action(methods=['patch', 'get'], detail=False,
-            permission_classes=[IsAuthenticated],
-            url_path='me', url_name='me')
-    def me(self, request, *args, **kwargs):
-        instance = self.request.user
-        serializer = self.get_serializer(instance)
-        if self.request.method == 'PATCH':
-            serializer = self.get_serializer(
-                instance, data=request.data, partial=True)
-            serializer.is_valid()
-            serializer.save()
-        return Response(serializer.data)
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
 def send_email(request):
-    email = request.data.get('email')
+    data = request.data
+    email = data.get('email')
     code = '123456'
     EmailCode.objects.create(
         email=email,
@@ -48,7 +37,8 @@ def send_email(request):
         recipient_list=[email],
         message=f'Код: {code}'
     )
-    return Response('<p>Удачно</p>')
+
+    return HttpResponse('<p>Удачно</p>')
 
 
 @api_view(['POST'])
