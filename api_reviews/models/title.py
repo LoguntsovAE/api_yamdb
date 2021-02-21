@@ -37,6 +37,13 @@ class Title(models.Model):
         null=True, related_name='titles'
     )
 
+    class Meta:
+        verbose_name = 'Произведение'
+        verbose_name_plural = 'Произведения'
+
+    def __str__(self):
+        return self.name
+
     def validate(self, year):
         if year > CURRENT_YEAR:
             raise ValidationError('Год не может быть больше текущего')
