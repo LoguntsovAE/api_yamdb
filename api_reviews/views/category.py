@@ -2,9 +2,9 @@ from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination
 
 from api_reviews.models.category import Category
-from api_reviews.viewset import CreateDesctroyReadOnlyCustom
 from api_reviews.permissions import IsAdminOrReadOnly
 from api_reviews.serializers.category import CategorySerializer
+from api_reviews.viewset import CreateDesctroyReadOnlyCustom
 
 
 class CategoryViewSet(CreateDesctroyReadOnlyCustom):
