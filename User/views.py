@@ -1,9 +1,8 @@
 import os
 
 from django.contrib.auth.models import send_mail
-from django.http import HttpResponse
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -14,12 +13,24 @@ from User.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
     permission_classes = [IsAuthenticated, IsAdmin]
     pagination_class = PageNumberPagination
     lookup_field = 'username'
-
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+
+    @action(methods=['patch', 'get'], detail=False,
+            permission_classes=[IsAuthenticated],
+            url_path='me', url_name='me')
+    def me(self, request, *args, **kwargs):
+        instance = self.request.user
+        serializer = self.get_serializer(instance)
+        if self.request.method == 'PATCH':
+            serializer = self.get_serializer(
+                instance, data=request.data, partial=True)
+            serializer.is_valid()
+            serializer.save()
+        return Response(serializer.data)
 
 
 @api_view(['POST'])
@@ -38,7 +49,7 @@ def send_email(request):
         message=f'Код: {code}'
     )
 
-    return HttpResponse('<p>Удачно</p>')
+    return Response('<p>Удачно</p>')
 
 
 @api_view(['POST'])
