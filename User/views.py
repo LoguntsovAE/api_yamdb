@@ -79,23 +79,12 @@ class SentConfirmCodeView(views.APIView):
 
 
 class SentJWTTokenView(SentConfirmCodeView):
-    """
-    Запрос пары токенов JWT (refresh, access)  по EMAIL и коду подтвержения.
-    Код подтвержения имеет полезную нагрузку payload,
-    по ней идентифицируем пользователя,
-    которому был этот код сформирован.
-    Предварительные действия при post  аналогичны GetConfirmCodeView,
-    отличия вынесены в action
-    """
+
     serializer_class = SentJWTTokenSerializer
 
     def action(self, user, serializer, token):
-        """
-        Проверяет соответствие payload из confirmation_code
-        и payload пользователя определенного по email.
-        формирует пару JWT-токена доступа.
-        """
         payload = token.decode(self.request.data.get('confirmation_code'))
+
         if payload == user.get_payload():
             refresh = RefreshToken.for_user(user)
             return Response(
