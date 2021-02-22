@@ -8,7 +8,6 @@ from User.views import SentConfirmCodeView, SentJWTTokenView, UserViewSet
 router_v1 = DefaultRouter()
 router_v1.register('users', UserViewSet, basename='users')
 
-
 registration = [
     path('email/', SentConfirmCodeView.as_view(), name='sent_confirm_code'),
     path('token/', SentJWTTokenView.as_view(), name='sent_jwt_token'),

@@ -20,20 +20,23 @@ class TitleFilter(filters.FilterSet):
 
     class Meta:
         model = Title
-        fields = (
-            'genre', 'category',
-            'year', 'name',
-        )
+
+        fields = ('genre', 'category', 'year', 'name',)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.annotate(rating=Avg('reviews__score'))
+    queryset = Title.objects.annotate(
+        rating=Avg('reviews__score')
+    ).order_by('id')
+
     permission_classes = [IsAdminOrReadOnly]
     pagination_class = PageNumberPagination
+
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = TitleFilter
 
     def get_serializer_class(self):
         if self.action == 'retrieve' or self.action == 'list':
             return TitleSerializerGet
+
         return TitleSerializerPost

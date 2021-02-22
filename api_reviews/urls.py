@@ -11,21 +11,16 @@ router_v1.register('genres', genre.GenreViewSet, basename='genres')
 router_v1.register('reviews', review.ReviewViewSet, basename='reviews')
 router_v1.register('comments', comment.CommentViewSet, basename='comments')
 router_v1.register(
-    'categories',
-    category.CategoryViewSet,
-    basename='categories'
+    'categories', category.CategoryViewSet, basename='categories'
 )
 router_v1.register(
-    r'titles/(?P<title_id>\d+)/reviews',
-    review.ReviewViewSet,
+    r'titles/(?P<title_id>\d+)/reviews', review.ReviewViewSet,
     basename='review'
 )
 router_v1.register(
     r'titles/(?P<title_id>\d+)/reviews/(?P<review_id>\d+)/comments',
-    comment.CommentViewSet,
-    basename='comment'
+    comment.CommentViewSet, basename='comment'
 )
-
 
 urlpatterns = [
     path('v1/', include(router_v1.urls))

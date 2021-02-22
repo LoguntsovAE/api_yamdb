@@ -1,7 +1,6 @@
 from django.db import models
 
 from User.models import User
-
 from .review import Review
 
 
@@ -28,12 +27,12 @@ class Comment(models.Model):
     )
 
     class Meta:
+        ordering = ['-pub_date']
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
-        ordering = ('-pub_date',)
 
     def __str__(self):
-        return 'Автор комментария: {}. Текст: {}'.format(
-            self.author.get_full_name(),
-            self.text[:30]
-        )
+        full_name = self.author.get_full_name()
+        text_comment = self.text[:30]
+
+        return f'Автор комментария: {full_name}. Текст: {text_comment}'

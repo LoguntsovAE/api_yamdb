@@ -1,12 +1,10 @@
 from django.db import models
 
 from User.models import User
-
 from .title import Title
 
 
 class Review(models.Model):
-
     CHOICES = [(i, i) for i in range(1, 11)]
 
     author = models.ForeignKey(
@@ -36,9 +34,10 @@ class Review(models.Model):
     )
 
     class Meta:
+        ordering = ['-pub_date']
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
-        ordering = ('-pub_date',)
+
         constraints = [
             models.UniqueConstraint(
                 fields=['title', 'author'], name='unique author'
@@ -46,8 +45,8 @@ class Review(models.Model):
         ]
 
     def __str__(self):
-        return 'Отзыв {} на произведение {}: {}'.format(
-            self.author.get_full_name(),
-            self.title
-            self.text[:30]
-        )
+        full_name = self.author.get_full_name()
+        title = self.title
+        text_review = self.text[:30]
+
+        return f'Отзыв {full_name} на произведение {title}: {text_review}'

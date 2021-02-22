@@ -11,10 +11,12 @@ from api_reviews.serializers.comment import CommentSerializer
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+
+    permission_classes = [
+        IsOwnerOrReadOnlyPermission,
+        IsAuthenticatedOrReadOnly
+    ]
     pagination_class = PageNumberPagination
-    permission_classes = [IsOwnerOrReadOnlyPermission,
-                          IsAuthenticatedOrReadOnly
-                          ]
 
     def get_queryset(self):
         review = get_object_or_404(
@@ -22,6 +24,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             pk=self.kwargs.get('review_id'),
             title=self.kwargs.get('title_id')
         )
+
         return review.comments.all()
 
     def perform_create(self, serializer):
