@@ -24,7 +24,7 @@ admin.site.register(Genre, GenreAdmin)
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'author', 'text', 'pub_date')
+    list_display = ('pk', 'author', 'text', 'pub_date', 'review_id')
     list_filter = ('pub_date',)
     search_fields = ('author__first_name',
                      'author__last_name',
@@ -39,9 +39,13 @@ admin.site.register(Comment, CommentAdmin)
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'text', 'pub_date', 'score')
+    list_display = ('pk', 'title', 'author', 'text', 'pub_date', 'score')
     list_filter = ('score', 'pub_date')
-    search_fields = ('title__name', 'text')
+    search_fields = ('title__name',
+                     'text',
+                     'author__username',
+                     'author__first_name',
+                     'author__last_name')
     autocomplete_fields = ('author', 'title')
     empty_value_display = '-'
 
@@ -52,7 +56,7 @@ admin.site.register(Review, ReviewAdmin)
 class TitleAdmin(admin.ModelAdmin):
     list_display = ('name', 'year', 'genre_list', 'category')
     list_filter = ('genre', 'category')
-    search_fields = ('name',)
+    search_fields = ('name', 'year')
     autocomplete_fields = ('category',)
     empty_value_display = '-'
 
