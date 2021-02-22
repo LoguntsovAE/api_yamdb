@@ -46,5 +46,8 @@ class Review(models.Model):
         ]
 
     def __str__(self):
-        return 'Автор: {}. Текст: {}'.format(self.author.get_full_name(),
-                                             self.text[:30])
+        return 'Отзыв {} на произведение {}: {}'.format(
+            self.author.get_full_name(),
+            self.title
+            self.text[:30]
+        )
