@@ -5,6 +5,7 @@ from api_reviews.models.category import Category
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('name', 'slug',)
         model = Category
+
+        fields = ('name', 'slug')
         lookup_field = 'slug'

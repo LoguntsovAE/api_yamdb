@@ -38,12 +38,14 @@ class Title(models.Model):
     )
 
     class Meta:
+        ordering = ['name']
         verbose_name = 'Произведение'
         verbose_name_plural = 'Произведения'
 
     def __str__(self):
         return self.name
 
-    def validate(self, year):
+    @staticmethod
+    def validate(year):
         if year > CURRENT_YEAR:
             raise ValidationError('Год не может быть больше текущего')

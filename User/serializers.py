@@ -5,7 +5,6 @@ from User.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     role = serializers.ChoiceField(choices=User.Role)
     username = serializers.CharField(
         required=True,
@@ -25,10 +24,11 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = ('id', 'username', 'email', 'bio',
-                  'first_name', 'last_name', 'role'
-                  )
         model = User
+
+        fields = (
+            'id', 'username', 'email', 'bio', 'first_name', 'last_name', 'role'
+        )
 
 
 class EmailSerializer(serializers.Serializer):
