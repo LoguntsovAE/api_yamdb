@@ -31,3 +31,9 @@ class Comment(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ('-pub_date',)
+
+    def __str__(self):
+        return 'Автор комментария: {}. Текст: {}'.format(
+            self.author.get_full_name(),
+            self.text[:30]
+        )
