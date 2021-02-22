@@ -12,10 +12,9 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name='comments'
     )
-    text = models.CharField(
+    text = models.TextField(
         verbose_name='Текст комментария',
         help_text='Напишите здесь текст вашего комментария!',
-        max_length=255
     )
     author = models.ForeignKey(
         User,
@@ -29,4 +28,12 @@ class Comment(models.Model):
     )
 
     class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
         ordering = ('-pub_date',)
+
+    def __str__(self):
+        return 'Автор комментария: {}. Текст: {}'.format(
+            self.author.get_full_name(),
+            self.text[:30]
+        )
