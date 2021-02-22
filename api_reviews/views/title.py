@@ -27,7 +27,7 @@ class TitleFilter(filters.FilterSet):
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.annotate(
         rating=Avg('reviews__score')
-    ).order_by('id')
+    ).order_by('name')
 
     permission_classes = [IsAdminOrReadOnly]
     pagination_class = PageNumberPagination

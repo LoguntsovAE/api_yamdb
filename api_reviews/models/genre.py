@@ -6,7 +6,7 @@ class Genre(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
 
     class Meta:
-        ordering = ['id']
+        ordering = ['name']
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
 
