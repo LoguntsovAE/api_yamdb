@@ -4,7 +4,8 @@ from django.db import models
 class Genre(models.Model):
     name = models.CharField(
         verbose_name='Название',
-        max_length=100)
+        max_length=100
+    )
     slug = models.SlugField(
         verbose_name='Короткий url',
         max_length=100,

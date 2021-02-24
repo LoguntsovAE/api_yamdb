@@ -3,7 +3,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from api_reviews.models import Comment, Review
+from api_reviews.models import Review
 from api_reviews.permissions import IsOwnerOrReadOnlyPermission
 from api_reviews.serializers.comment import CommentSerializer
 

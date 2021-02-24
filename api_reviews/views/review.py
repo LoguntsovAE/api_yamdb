@@ -2,9 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.serializers import ValidationError
 
-from api_reviews.models import Review, Title
+from api_reviews.models import Title
 from api_reviews.permissions import IsOwnerOrReadOnlyPermission
 from api_reviews.serializers.review import ReviewSerializer
 

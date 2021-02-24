@@ -60,7 +60,9 @@ class SentConfirmCodeView(views.APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        User.objects.get_or_create(email=serializer.validated_data.get('email'))
+        User.objects.get_or_create(
+            email=serializer.validated_data.get('email')
+        )
         user = get_object_or_404(User, email=request.data.get('email'))
         token = TokenBackend(
             SIMPLE_JWT['ALGORITHM'],

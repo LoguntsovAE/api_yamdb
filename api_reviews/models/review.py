@@ -1,4 +1,3 @@
-from django.core import validators
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -8,7 +7,6 @@ from .title import Title
 
 
 class Review(models.Model):
-    CHOICES = [(i, i) for i in range(1, 11)]
 
     author = models.ForeignKey(
         User,
