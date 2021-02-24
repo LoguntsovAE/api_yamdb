@@ -10,11 +10,11 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.backends import TokenBackend
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from api_yamdb.settings import SIMPLE_JWT
 from User.models import User
 from User.permissions import IsAdmin
 from User.serializers import (EmailSerializer, SentJWTTokenSerializer,
                               UserSerializer)
-from api_yamdb.settings import SIMPLE_JWT
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -37,19 +37,10 @@ class UserViewSet(viewsets.ModelViewSet):
             data=request.data,
             partial=partial,
         )
-        serializer.is_valid()
+        serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
         return Response(serializer.data)
-
-
-def send_confirmation_code(subject, message, recipient):
-    send_mail(
-        subject=subject,
-        message=message,
-        from_email=os.getenv('EMAIL_HOST_DJANGO'),
-        recipient_list=[recipient]
-    )
 
 
 class SentConfirmCodeView(views.APIView):
@@ -57,18 +48,19 @@ class SentConfirmCodeView(views.APIView):
 
     def action(self, user, serializer, token):
         code = token.encode(user.get_payload())
-        send_confirmation_code(
+        send_mail(
             subject='Alo-Oha! Look mail!',
             message=f'Your code is: {code}',
-            recipient=user.email
+            from_email=os.getenv('EMAIL_HOST_DJANGO'),
+            recipient_list=[user.email]
         )
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-        serializer.is_valid()
-        User.objects.get_or_create(email=request.data.get('email'))
+        serializer.is_valid(raise_exception=True)
+        User.objects.get_or_create(email=serializer.validated_data.get('email'))
         user = get_object_or_404(User, email=request.data.get('email'))
         token = TokenBackend(
             SIMPLE_JWT['ALGORITHM'],
@@ -83,7 +75,9 @@ class SentJWTTokenView(SentConfirmCodeView):
     serializer_class = SentJWTTokenSerializer
 
     def action(self, user, serializer, token):
-        payload = token.decode(self.request.data.get('confirmation_code'))
+        payload = token.decode(
+            serializer.validated_data.get('confirmation_code')
+        )
 
         if payload == user.get_payload():
             refresh = RefreshToken.for_user(user)

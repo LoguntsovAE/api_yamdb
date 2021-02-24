@@ -1,6 +1,9 @@
+from django.core import validators
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from User.models import User
+
 from .title import Title
 
 
@@ -30,7 +33,10 @@ class Review(models.Model):
     score = models.PositiveSmallIntegerField(
         verbose_name='Рейтинг объекта',
         help_text='Выберите рейтинг от 1 до 10',
-        choices=CHOICES
+        validators=[
+            MaxValueValidator(10),
+            MinValueValidator(1)
+        ]
     )
 
     class Meta:
@@ -48,5 +54,4 @@ class Review(models.Model):
         full_name = self.author.get_full_name()
         title = self.title
         text_review = self.text[:30]
-
         return f'Отзыв {full_name} на произведение {title}: {text_review}'
