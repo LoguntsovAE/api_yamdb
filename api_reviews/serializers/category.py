@@ -7,5 +7,5 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
 
-        exclude = ('pk',)
+        exclude = ('id',)
         lookup_field = 'slug'

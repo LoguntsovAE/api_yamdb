@@ -7,5 +7,5 @@ class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
 
-        exclude = ('pk',)
+        exclude = ('id',)
         lookup_field = 'slug'
