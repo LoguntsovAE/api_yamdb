@@ -7,7 +7,7 @@ from .review import Review
 class Comment(models.Model):
     review = models.ForeignKey(
         Review,
-        verbose_name='К чему комментарий',
+        verbose_name='Ревью',
         on_delete=models.CASCADE,
         related_name='comments'
     )
@@ -19,11 +19,13 @@ class Comment(models.Model):
         User,
         verbose_name='Автор комментария',
         on_delete=models.CASCADE,
-        related_name='comments'
+        related_name='comments',
+        db_index=True
     )
     pub_date = models.DateTimeField(
         verbose_name='Дата создания отзыва',
-        auto_now_add=True
+        auto_now_add=True,
+        db_index=True
     )
 
     class Meta:

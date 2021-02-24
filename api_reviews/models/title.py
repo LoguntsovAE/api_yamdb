@@ -6,7 +6,10 @@ from django.db import models
 from .category import Category
 from .genre import Genre
 
-CURRENT_YEAR = dt.datetime.today().year
+
+def validate_year(value):
+    if value > dt.datetime.today().year:
+        raise ValidationError('Год не может быть больше текущего')
 
 
 class Title(models.Model):
@@ -17,7 +20,9 @@ class Title(models.Model):
     )
     year = models.PositiveIntegerField(
         verbose_name='Год создания произведения',
-        blank=True, null=True
+        blank=True,
+        null=True,
+        validators=[validate_year]
     )
     description = models.TextField(
         verbose_name='Описание произведения',
@@ -28,7 +33,7 @@ class Title(models.Model):
         Genre,
         blank=True,
         verbose_name='Жанры',
-        related_name='genres'
+        related_name='titles'
     )
     category = models.ForeignKey(
         Category,
@@ -44,8 +49,3 @@ class Title(models.Model):
 
     def __str__(self):
         return self.name
-
-    @staticmethod
-    def validate(year):
-        if year > CURRENT_YEAR:
-            raise ValidationError('Год не может быть больше текущего')

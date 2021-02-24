@@ -11,11 +11,12 @@ class Review(models.Model):
         User,
         verbose_name='Автор отзыва',
         on_delete=models.CASCADE,
-        related_name='reviews'
+        related_name='reviews',
+        db_index=True
     )
     title = models.ForeignKey(
         Title,
-        verbose_name='К чему отзыв',
+        verbose_name='Произведение',
         on_delete=models.CASCADE,
         related_name='reviews'
     )
@@ -25,7 +26,8 @@ class Review(models.Model):
     )
     pub_date = models.DateTimeField(
         verbose_name='Дата создания отзыва',
-        auto_now_add=True
+        auto_now_add=True,
+        db_index=True
     )
     score = models.PositiveSmallIntegerField(
         verbose_name='Рейтинг объекта',
