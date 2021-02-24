@@ -11,7 +11,6 @@ from api_reviews.serializers.review import ReviewSerializer
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    queryset = Review.objects.all()
 
     permission_classes = [
         IsOwnerOrReadOnlyPermission,
@@ -26,9 +25,4 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-        if Review.objects.filter(
-                title=title,
-                author=self.request.user
-        ).exists():
-            raise ValidationError('Вы уже писали своё ревью. Хватит!')
         serializer.save(author=self.request.user, title=title)

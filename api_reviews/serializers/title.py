@@ -9,7 +9,7 @@ from .genre import GenreSerializer
 
 
 class TitleSerializerGet(serializers.ModelSerializer):
-    rating = serializers.SerializerMethodField()
+    rating = serializers.IntegerField()
     genre = GenreSerializer(many=True, read_only=True)
     category = CategorySerializer(read_only=True)
 
@@ -19,14 +19,6 @@ class TitleSerializerGet(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'year', 'rating', 'description', 'genre', 'category',
         )
-
-    @staticmethod
-    def get_rating(obj):
-        rating = obj.reviews.all().aggregate(Avg('score'))['score__avg']
-        if rating is None:
-            return None
-
-        return rating
 
 
 class TitleSerializerPost(serializers.ModelSerializer):
@@ -46,11 +38,3 @@ class TitleSerializerPost(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'year', 'description', 'genre', 'category',
         )
-
-    @staticmethod
-    def get_rating(obj):
-        rating = obj.reviews.all().aggregate(Avg('score')).get('score_avg')
-        if rating is None:
-            return 0
-
-        return rating
