@@ -67,7 +67,7 @@ class SentConfirmCodeView(views.APIView):
             signing_key=SIMPLE_JWT['SIGNING_KEY'],
         )
 
-        return self.action(user, serializer, token)
+        return self.action(user[0], serializer, token)
 
 
 class SentJWTTokenView(SentConfirmCodeView):
