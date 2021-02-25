@@ -59,7 +59,7 @@ class SentConfirmCodeView(views.APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = User.objects.get_or_create(
+        obj, created = User.objects.get_or_create(
             email=serializer.validated_data.get('email')
         )
         token = TokenBackend(
@@ -67,7 +67,7 @@ class SentConfirmCodeView(views.APIView):
             signing_key=SIMPLE_JWT['SIGNING_KEY'],
         )
 
-        return self.action(user[0], serializer, token)
+        return self.action(obj, serializer, token)
 
 
 class SentJWTTokenView(SentConfirmCodeView):
