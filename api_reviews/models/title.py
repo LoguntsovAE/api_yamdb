@@ -1,15 +1,8 @@
-import datetime as dt
-
-from django.core.exceptions import ValidationError
 from django.db import models
 
+from api_reviews.validators import validate_year
 from .category import Category
 from .genre import Genre
-
-
-def validate_year(value):
-    if value > dt.datetime.today().year:
-        raise ValidationError('Год не может быть больше текущего')
 
 
 class Title(models.Model):
