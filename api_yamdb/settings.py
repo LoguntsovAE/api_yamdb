@@ -17,14 +17,10 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'User.User'
 
 INSTALLED_APPS = [
-    # APPS
     'api_reviews',
     'User',
-    # REST_FRAMEWORK
     'rest_framework',
-    # Django_filters
     'django_filters',
-    # DEFAULT
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
